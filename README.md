@@ -1,8 +1,6 @@
 [README (1).md](https://github.com/user-attachments/files/26362937/README.1.md)
 # Call Out Tracker
 
-Part of [The DOR Suite](https://cliff-peters.github.io/dor-suite-dashboard/) - workflow tools for the Director of Rehabilitation.
-
 ## What It Does
 
 Track and monitor employee call outs by month with per-employee breakdowns, trend charts, and optional Google Sheets sync.
