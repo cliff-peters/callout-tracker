@@ -1,6 +1,7 @@
 [README (1).md](https://github.com/user-attachments/files/26362937/README.1.md)
 # Call Out Tracker
 
+
 ## What It Does
 
 Track and monitor employee call outs by month with per-employee breakdowns, trend charts, and optional Google Sheets sync.
