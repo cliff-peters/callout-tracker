@@ -840,18 +840,25 @@
   // ── Helpers ──
   function normalizeDate(d) {
     if (!d) return '';
+    // Handle Date objects directly
+    if (d instanceof Date) {
+      var y = d.getFullYear();
+      var m = ('0' + (d.getMonth() + 1)).slice(-2);
+      var day = ('0' + d.getDate()).slice(-2);
+      return y + '-' + m + '-' + day;
+    }
     var s = String(d);
     // Already YYYY-MM-DD
     if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
-    // Google Sheets may return ISO string like "2026-03-30T05:00:00.000Z"
+    // ISO string like "2026-03-30T05:00:00.000Z"
     if (s.includes('T')) return s.split('T')[0];
-    // Google may return "Mon Mar 30 2026..." or similar
+    // Other string format
     var parsed = new Date(s);
     if (!isNaN(parsed)) {
-      var y = parsed.getFullYear();
-      var m = ('0' + (parsed.getMonth() + 1)).slice(-2);
-      var day = ('0' + parsed.getDate()).slice(-2);
-      return y + '-' + m + '-' + day;
+      var y2 = parsed.getFullYear();
+      var m2 = ('0' + (parsed.getMonth() + 1)).slice(-2);
+      var d2 = ('0' + parsed.getDate()).slice(-2);
+      return y2 + '-' + m2 + '-' + d2;
     }
     return s;
   }
@@ -909,7 +916,8 @@
   // ── Render ──
   async function render() {
     document.getElementById('monthLabel').textContent = formatMonthLabel();
-    const today = new Date().toISOString().split('T')[0];
+    const now = new Date();
+    const today = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
     document.getElementById('inputDate').value = today;
 
     let allData;
