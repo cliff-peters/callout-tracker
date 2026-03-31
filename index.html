@@ -838,8 +838,27 @@
   }
 
   // ── Helpers ──
+  function normalizeDate(d) {
+    if (!d) return '';
+    var s = String(d);
+    // Already YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+    // Google Sheets may return ISO string like "2026-03-30T05:00:00.000Z"
+    if (s.includes('T')) return s.split('T')[0];
+    // Google may return "Mon Mar 30 2026..." or similar
+    var parsed = new Date(s);
+    if (!isNaN(parsed)) {
+      var y = parsed.getFullYear();
+      var m = ('0' + (parsed.getMonth() + 1)).slice(-2);
+      var day = ('0' + parsed.getDate()).slice(-2);
+      return y + '-' + m + '-' + day;
+    }
+    return s;
+  }
+
   function getMonthKey(d) {
-    const date = new Date(d);
+    var nd = normalizeDate(d);
+    var date = new Date(nd + 'T12:00:00');
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
   }
 
@@ -903,7 +922,7 @@
 
     const key = currentMonthKey();
     const entries = allData.filter(e => getMonthKey(e.date) === key);
-    entries.sort((a, b) => new Date(b.date) - new Date(a.date));
+    entries.sort((a, b) => new Date(normalizeDate(b.date) + 'T12:00:00') - new Date(normalizeDate(a.date) + 'T12:00:00'));
 
     const sick = entries.filter(e => e.reason === 'Sick').length;
     const noShow = entries.filter(e => e.reason === 'No Show').length;
@@ -936,7 +955,7 @@
     } else {
       emptyLog.style.display = 'none';
       logBody.innerHTML = entries.map(e => {
-        const d = new Date(e.date + 'T12:00:00');
+        const d = new Date(normalizeDate(e.date) + 'T12:00:00');
         const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         const badgeClass = e.reason === 'Sick' ? 'badge-sick'
           : e.reason === 'No Show' ? 'badge-noshow'
