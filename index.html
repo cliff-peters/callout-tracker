@@ -529,11 +529,12 @@
     line-height: 1.7; max-height: 180px; overflow-y: auto; white-space: pre;
   }
   .copy-script-btn {
-    margin-top: 10px;
+    display: inline;
     background: rgba(62,207,122,0.08); border: 1px solid rgba(62,207,122,0.2);
     color: var(--green); font-family: 'Mulish', sans-serif;
     font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 6px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+    padding: 3px 10px; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+    vertical-align: middle;
   }
   .copy-script-btn:hover { background: rgba(62,207,122,0.14); border-color: var(--green); }
   /* Connect URL row */
@@ -636,54 +637,11 @@
   <div class="setup-panel" id="setupPanel">
     <div class="setup-tabs">
       <button class="setup-tab active" id="stab-instr" onclick="switchSetupTab('instr')">Instructions</button>
-      <button class="setup-tab" id="stab-script" onclick="switchSetupTab('script')">Apps Script</button>
       <button class="setup-tab" id="stab-creds" onclick="switchSetupTab('creds')">My Credentials</button>
     </div>
 
-    <!-- Instructions -->
-    <div class="setup-body" id="sbody-instr">
-      <div class="setup-step">
-        <div class="step-num">1</div>
-        <div>Create a new <a href="https://sheets.google.com" target="_blank">Google Sheet</a> using your personal Gmail account (work accounts may restrict script deployments).</div>
-      </div>
-      <div class="setup-step">
-        <div class="step-num">2</div>
-        <div>Rename the first tab to exactly <strong>CallOuts</strong>. Then manually add headers: <strong>ID</strong> in A1, <strong>Date</strong> in B1, <strong>Name</strong> in C1, <strong>Reason</strong> in D1.</div>
-      </div>
-      <div class="setup-step">
-        <div class="step-num">3</div>
-        <div>Go to <strong>Extensions → Apps Script</strong>. Delete any existing code. Paste in the Apps Script code from the Apps Script tab, then click Save.</div>
-      </div>
-      <div class="setup-step">
-        <div class="step-num">4</div>
-        <div>Click <strong>Deploy → New Deployment</strong>. Set type to <strong>Web App</strong>, execute as <strong>Me</strong>, access to <strong>Anyone</strong>. Copy the deployment URL.</div>
-      </div>
-      <div class="setup-step">
-        <div class="step-num">5</div>
-        <div>Paste your deployment URL below and click Connect. The status dot will turn green when connected.</div>
-      </div>
-      <div class="setup-step">
-        <div class="step-num">6</div>
-        <div>You may notice a brief delay when adding or deleting entries — this is normal. Each change routes through Google's servers, which adds a second or two compared to local storage.</div>
-      </div>
-      <div class="setup-connect-row" style="margin-top:16px;">
-        <div class="form-group">
-          <label>Apps Script URL</label>
-          <input type="text" id="inputScriptUrl" placeholder="https://script.google.com/macros/s/..." />
-        </div>
-        <button class="btn btn-primary" onclick="saveScriptUrl()">Connect</button>
-        <button class="btn" onclick="disconnectSheet()">Disconnect</button>
-      </div>
-      <div class="setup-msg" id="setupMsg"></div>
-    </div>
-
-    <!-- Apps Script -->
-    <div class="setup-body" id="sbody-script" style="display:none;">
-      <div class="setup-step">
-        <div class="step-num">1</div>
-        <div>Copy the code below and paste it into your Apps Script editor, replacing all existing content.</div>
-      </div>
-      <div class="code-block" id="appsScriptCode">function doPost(e) {
+    <!-- Hidden script for copying -->
+    <div id="appsScriptCode" style="display:none;">function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
     const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -730,7 +688,42 @@ function respond(data) {
     .createTextOutput(JSON.stringify(data))
     .setMimeType(ContentService.MimeType.JSON);
 }</div>
-      <button class="copy-script-btn" onclick="copyAppsScript(this)">Copy Script</button>
+
+    <!-- Instructions -->
+    <div class="setup-body" id="sbody-instr">
+      <div class="setup-step">
+        <div class="step-num">1</div>
+        <div>Create a new <a href="https://sheets.google.com" target="_blank">Google Sheet</a> using your personal Gmail account (work accounts may restrict script deployments).</div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">2</div>
+        <div>Rename the first tab to exactly <strong>CallOuts</strong>. Then manually add headers: <strong>ID</strong> in A1, <strong>Date</strong> in B1, <strong>Name</strong> in C1, <strong>Reason</strong> in D1.</div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">3</div>
+        <div>Go to <strong>Extensions → Apps Script</strong>. Delete any existing code. <button class="copy-script-btn" id="copyScriptBtn" onclick="copyAppsScript(this)">Copy Script</button> and paste it into the editor, then click Save.</div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">4</div>
+        <div>Click <strong>Deploy → New Deployment</strong>. Set type to <strong>Web App</strong>, execute as <strong>Me</strong>, access to <strong>Anyone</strong>. Copy the deployment URL.</div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">5</div>
+        <div>Paste your deployment URL below and click Connect. The status dot will turn green when connected.</div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">6</div>
+        <div>You may notice a brief delay when adding or deleting entries — this is normal. Each change routes through Google's servers, which adds a second or two compared to local storage.</div>
+      </div>
+      <div class="setup-connect-row" style="margin-top:16px;">
+        <div class="form-group">
+          <label>Apps Script URL</label>
+          <input type="text" id="inputScriptUrl" placeholder="https://script.google.com/macros/s/..." />
+        </div>
+        <button class="btn btn-primary" onclick="saveScriptUrl()">Connect</button>
+        <button class="btn" onclick="disconnectSheet()">Disconnect</button>
+      </div>
+      <div class="setup-msg" id="setupMsg"></div>
     </div>
 
     <!-- My Credentials -->
@@ -985,11 +978,10 @@ function respond(data) {
 
   // ── Setup Tabs ──
   function switchSetupTab(tab) {
-    ['instr','script','creds'].forEach(t => {
+    ['instr','creds'].forEach(t => {
       document.getElementById('stab-'+t).classList.toggle('active', t===tab);
       document.getElementById('sbody-'+t).style.display = t===tab ? 'block' : 'none';
     });
-    // Lock vault when switching away
     if(tab !== 'creds') {
       document.getElementById('credsVault').style.display = 'none';
       document.getElementById('credsPwInput').value = '';
@@ -998,7 +990,7 @@ function respond(data) {
   }
 
   function copyAppsScript(btn) {
-    const code = document.getElementById('appsScriptCode').textContent;
+    const code = document.getElementById('appsScriptCode').textContent.trim();
     if(navigator.clipboard && window.isSecureContext){
       navigator.clipboard.writeText(code).then(()=>{
         btn.textContent='Copied!';
