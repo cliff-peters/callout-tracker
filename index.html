@@ -630,15 +630,10 @@
       </button>
       <button class="btn" onclick="exportCSV()">&#x2913; Export CSV</button>
       <button class="btn" onclick="window.print()">&#x2399; Print</button>
-      <button class="btn btn-danger btn-sm" onclick="showClearModal()">Clear All Data</button>
     </div>
   </header>
 
   <div class="setup-panel" id="setupPanel">
-    <div class="setup-tabs">
-      <button class="setup-tab active" id="stab-instr" onclick="switchSetupTab('instr')">Instructions</button>
-      <button class="setup-tab" id="stab-creds" onclick="switchSetupTab('creds')">My Credentials</button>
-    </div>
 
     <!-- Hidden script for copying -->
     <div id="appsScriptCode" style="display:none;">function doPost(e) {
@@ -689,8 +684,13 @@ function respond(data) {
     .setMimeType(ContentService.MimeType.JSON);
 }</div>
 
-    <!-- Instructions -->
-    <div class="setup-body" id="sbody-instr">
+    <!-- Single tab header -->
+    <div class="setup-tabs">
+      <div class="setup-tab active" style="cursor:default;">Instructions</div>
+    </div>
+
+    <!-- Instructions body -->
+    <div class="setup-body">
       <div class="setup-step">
         <div class="step-num">1</div>
         <div>Create a new <a href="https://sheets.google.com" target="_blank">Google Sheet</a> using your personal Gmail account (work accounts may restrict script deployments).</div>
@@ -724,32 +724,37 @@ function respond(data) {
         <button class="btn" onclick="disconnectSheet()">Disconnect</button>
       </div>
       <div class="setup-msg" id="setupMsg"></div>
-    </div>
 
-    <!-- My Credentials -->
-    <div class="setup-body" id="sbody-creds" style="display:none;">
-      <div class="creds-lock-title">Enter Password to Access</div>
-      <div class="creds-pw-row">
-        <input type="password" class="creds-pw-input" id="credsPwInput" placeholder="Password" onkeydown="if(event.key==='Enter')unlockCreds()"/>
-        <button class="creds-pw-btn" onclick="unlockCreds()">Unlock</button>
-      </div>
-      <div class="creds-error" id="credsError">Incorrect password.</div>
-      <div class="creds-vault" id="credsVault">
-        <div class="creds-item">
-          <div class="creds-item-label">Apps Script URL</div>
-          <div class="creds-item-row">
-            <input type="text" class="creds-item-val" id="credsUrl" readonly/>
-            <button class="creds-copy-btn" onclick="copyCred('credsUrl',this)">Copy</button>
+      <!-- My Credentials — discrete footer -->
+      <div style="border-top:1px solid #1e2430;margin-top:20px;padding-top:14px;">
+        <button id="credsToggleBtn" onclick="toggleCredsBlock()" style="background:none;border:none;cursor:pointer;font-family:'Mulish',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#4a5268;padding:0;display:flex;align-items:center;gap:5px;transition:color 0.2s;">
+          <span>My Credentials</span>
+          <span id="credsChevron" style="font-size:8px;transition:transform 0.2s;">▾</span>
+        </button>
+        <div id="credsBlock" style="display:none;margin-top:12px;">
+          <div class="creds-pw-row">
+            <input type="password" class="creds-pw-input" id="credsPwInput" placeholder="Password" onkeydown="if(event.key==='Enter')unlockCreds()"/>
+            <button class="creds-pw-btn" onclick="unlockCreds()">Unlock</button>
+          </div>
+          <div class="creds-error" id="credsError">Incorrect password.</div>
+          <div class="creds-vault" id="credsVault">
+            <div class="creds-item" style="margin-top:14px;">
+              <div class="creds-item-label">Apps Script URL</div>
+              <div class="creds-item-row">
+                <input type="text" class="creds-item-val" id="credsUrl" readonly/>
+                <button class="creds-copy-btn" onclick="copyCred('credsUrl',this)">Copy</button>
+              </div>
+            </div>
+            <div class="creds-item">
+              <div class="creds-item-label">Notes</div>
+              <div class="creds-item-row">
+                <input type="text" class="creds-item-val" id="credsNotes" placeholder="Any additional notes..."/>
+              </div>
+            </div>
+            <button class="creds-save-btn" onclick="saveCreds()">Save Notes</button>
+            <div class="creds-saved-msg" id="credsSavedMsg">Notes saved.</div>
           </div>
         </div>
-        <div class="creds-item">
-          <div class="creds-item-label">Notes</div>
-          <div class="creds-item-row">
-            <input type="text" class="creds-item-val" id="credsNotes" placeholder="Any additional notes..."/>
-          </div>
-        </div>
-        <button class="creds-save-btn" onclick="saveCreds()">Save Notes</button>
-        <div class="creds-saved-msg" id="credsSavedMsg">Notes saved.</div>
       </div>
     </div>
   </div>
@@ -854,17 +859,6 @@ function respond(data) {
     <span>Designed by Cliff Peters</span>
   </div>
 
-</div>
-
-<div class="modal-overlay" id="clearModal">
-  <div class="modal">
-    <h3>Clear All Data</h3>
-    <p>This will permanently delete all call out records across every month. This cannot be undone.</p>
-    <div class="modal-actions">
-      <button class="btn" onclick="hideClearModal()">Cancel</button>
-      <button class="btn btn-danger" onclick="clearAllData()">Delete Everything</button>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -977,12 +971,15 @@ function respond(data) {
   }
 
   // ── Setup Tabs ──
-  function switchSetupTab(tab) {
-    ['instr','creds'].forEach(t => {
-      document.getElementById('stab-'+t).classList.toggle('active', t===tab);
-      document.getElementById('sbody-'+t).style.display = t===tab ? 'block' : 'none';
-    });
-    if(tab !== 'creds') {
+  function toggleCredsBlock() {
+    const block = document.getElementById('credsBlock');
+    const btn = document.getElementById('credsToggleBtn');
+    const chevron = document.getElementById('credsChevron');
+    const isOpen = block.style.display !== 'none';
+    block.style.display = isOpen ? 'none' : 'block';
+    btn.style.color = isOpen ? '#4a5268' : '#9ca3b4';
+    chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+    if(isOpen) {
       document.getElementById('credsVault').style.display = 'none';
       document.getElementById('credsPwInput').value = '';
       document.getElementById('credsError').style.display = 'none';
@@ -1314,22 +1311,6 @@ function respond(data) {
       a.click();
       URL.revokeObjectURL(url);
     });
-  }
-
-  function showClearModal() { document.getElementById('clearModal').classList.add('show'); }
-  function hideClearModal() { document.getElementById('clearModal').classList.remove('show'); }
-  async function clearAllData() {
-    try {
-      if (useCloud) {
-        await cloudClearAll();
-      } else {
-        localStorage.removeItem(STORAGE_KEY);
-      }
-      hideClearModal();
-      await render();
-    } catch (err) {
-      alert('Failed to clear. ' + err.message);
-    }
   }
 
   // ── Init ──
