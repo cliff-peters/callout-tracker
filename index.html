@@ -467,45 +467,127 @@
   .conn-dot.cloud { background: var(--green); }
   .conn-dot.error { background: var(--red); }
 
-  /* ── Setup Panel ── */
+  /* ── Setup Panel (three-tab) ── */
   .setup-panel {
     background: var(--surface);
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
-    padding: 22px;
     margin-bottom: 20px;
     display: none;
+    overflow: hidden;
   }
   .setup-panel.show { display: block; }
-  .setup-panel h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 6px;
+  .setup-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--bdr);
   }
-  .setup-panel p {
+  .setup-tab {
+    flex: 1;
+    padding: 11px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .setup-tab.active { color: var(--green); border-bottom-color: var(--green); }
+  .setup-tab:hover:not(.active) { color: var(--txt); }
+  .setup-body { padding: 20px; }
+  .setup-step {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
     font-size: 0.82rem;
+    font-weight: 600;
     color: var(--muted);
     line-height: 1.6;
-    margin-bottom: 14px;
   }
-  .setup-panel .setup-row {
-    display: flex;
-    gap: 10px;
-    align-items: end;
+  .setup-step:last-child { margin-bottom: 0; }
+  .step-num {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(62,207,122,0.1);
+    border: 1px solid rgba(62,207,122,0.2);
+    color: var(--green);
+    font-size: 0.65rem; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
   }
-  .setup-panel .setup-row .form-group { flex: 1; }
-  .setup-panel .setup-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 14px;
-    align-items: center;
+  .setup-step a { color: var(--blue); text-decoration: none; }
+  .setup-step a:hover { text-decoration: underline; }
+  .setup-step strong { color: var(--txt); }
+  .code-block {
+    background: var(--bg); border: 1px solid var(--bdr); border-radius: 6px;
+    padding: 12px 14px; margin-top: 10px;
+    font-family: monospace; font-size: 0.72rem; color: var(--muted);
+    line-height: 1.7; max-height: 180px; overflow-y: auto; white-space: pre;
   }
-  .setup-panel .setup-msg {
-    font-size: 0.78rem;
-    margin-left: 8px;
+  .copy-script-btn {
+    margin-top: 10px;
+    background: rgba(62,207,122,0.08); border: 1px solid rgba(62,207,122,0.2);
+    color: var(--green); font-family: 'Mulish', sans-serif;
+    font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s;
   }
+  .copy-script-btn:hover { background: rgba(62,207,122,0.14); border-color: var(--green); }
+  /* Connect URL row */
+  .setup-connect-row { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 12px; }
+  .setup-connect-row .form-group { flex: 1; margin: 0; }
+  .setup-msg { font-size: 0.78rem; margin-top: 8px; }
   .setup-msg.success { color: var(--green); }
   .setup-msg.error { color: var(--red); }
+  /* Credentials tab */
+  .creds-lock-title { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .creds-pw-row { display: flex; gap: 8px; margin-bottom: 4px; }
+  .creds-pw-input {
+    flex: 1; background: var(--bg); border: 1px solid var(--bdr);
+    border-radius: 6px; color: var(--txt);
+    font-family: 'Mulish', sans-serif; font-size: 0.88rem; font-weight: 600;
+    padding: 9px 12px; outline: none; transition: border-color 0.15s;
+  }
+  .creds-pw-input:focus { border-color: var(--amber); }
+  .creds-pw-btn {
+    background: rgba(224,168,72,0.08); border: 1px solid rgba(224,168,72,0.25);
+    color: var(--amber); font-family: 'Mulish', sans-serif;
+    font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 9px 16px; border-radius: 6px; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  }
+  .creds-pw-btn:hover { background: rgba(224,168,72,0.15); border-color: var(--amber); }
+  .creds-error { font-size: 0.75rem; font-weight: 700; color: var(--red); margin-top: 6px; display: none; }
+  .creds-vault { display: none; margin-top: 16px; }
+  .creds-item { margin-bottom: 14px; }
+  .creds-item:last-child { margin-bottom: 0; }
+  .creds-item-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .creds-item-row { display: flex; gap: 8px; align-items: center; }
+  .creds-item-val {
+    flex: 1; background: var(--bg); border: 1px solid var(--bdr);
+    border-radius: 6px; color: var(--txt);
+    font-family: 'Mulish', sans-serif; font-size: 0.8rem; font-weight: 600;
+    padding: 9px 12px; outline: none; transition: border-color 0.15s;
+  }
+  .creds-item-val:focus { border-color: var(--amber); }
+  .creds-copy-btn {
+    background: rgba(90,157,230,0.08); border: 1px solid rgba(90,157,230,0.2);
+    color: var(--blue); font-family: 'Mulish', sans-serif;
+    font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 9px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  }
+  .creds-copy-btn:hover { background: rgba(90,157,230,0.15); border-color: var(--blue); }
+  .creds-save-btn {
+    margin-top: 14px;
+    background: rgba(62,207,122,0.08); border: 1px solid rgba(62,207,122,0.2);
+    color: var(--green); font-family: 'Mulish', sans-serif;
+    font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 9px 20px; border-radius: 6px; cursor: pointer; transition: all 0.2s;
+  }
+  .creds-save-btn:hover { background: rgba(62,207,122,0.14); border-color: var(--green); }
+  .creds-saved-msg { font-size: 0.75rem; font-weight: 700; color: var(--green); margin-top: 8px; display: none; }
 
   /* ── Responsive ── */
   @media (max-width: 700px) {
@@ -552,18 +634,130 @@
   </header>
 
   <div class="setup-panel" id="setupPanel">
-    <h3>Google Sheets Connection</h3>
-    <p>Paste your Google Apps Script URL below to sync data across devices. Without it, data saves to this browser only.</p>
-    <div class="setup-row">
-      <div class="form-group">
-        <label>Apps Script URL</label>
-        <input type="text" id="inputScriptUrl" placeholder="https://script.google.com/macros/s/..." />
-      </div>
+    <div class="setup-tabs">
+      <button class="setup-tab active" id="stab-instr" onclick="switchSetupTab('instr')">Instructions</button>
+      <button class="setup-tab" id="stab-script" onclick="switchSetupTab('script')">Apps Script</button>
+      <button class="setup-tab" id="stab-creds" onclick="switchSetupTab('creds')">My Credentials</button>
     </div>
-    <div class="setup-actions">
-      <button class="btn btn-primary" onclick="saveScriptUrl()">Connect</button>
-      <button class="btn" onclick="disconnectSheet()">Disconnect</button>
-      <span class="setup-msg" id="setupMsg"></span>
+
+    <!-- Instructions -->
+    <div class="setup-body" id="sbody-instr">
+      <div class="setup-step">
+        <div class="step-num">1</div>
+        <div>Create a new <a href="https://sheets.google.com" target="_blank">Google Sheet</a> using your personal Gmail account (work accounts may restrict script deployments).</div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">2</div>
+        <div>Rename the first tab to exactly <strong>CallOuts</strong>. Then manually add headers: <strong>ID</strong> in A1, <strong>Date</strong> in B1, <strong>Name</strong> in C1, <strong>Reason</strong> in D1.</div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">3</div>
+        <div>Go to <strong>Extensions → Apps Script</strong>. Delete any existing code. Paste in the Apps Script code from the Apps Script tab, then click Save.</div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">4</div>
+        <div>Click <strong>Deploy → New Deployment</strong>. Set type to <strong>Web App</strong>, execute as <strong>Me</strong>, access to <strong>Anyone</strong>. Copy the deployment URL.</div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">5</div>
+        <div>Paste your deployment URL below and click Connect. The status dot will turn green when connected.</div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">6</div>
+        <div>You may notice a brief delay when adding or deleting entries — this is normal. Each change routes through Google's servers, which adds a second or two compared to local storage.</div>
+      </div>
+      <div class="setup-connect-row" style="margin-top:16px;">
+        <div class="form-group">
+          <label>Apps Script URL</label>
+          <input type="text" id="inputScriptUrl" placeholder="https://script.google.com/macros/s/..." />
+        </div>
+        <button class="btn btn-primary" onclick="saveScriptUrl()">Connect</button>
+        <button class="btn" onclick="disconnectSheet()">Disconnect</button>
+      </div>
+      <div class="setup-msg" id="setupMsg"></div>
+    </div>
+
+    <!-- Apps Script -->
+    <div class="setup-body" id="sbody-script" style="display:none;">
+      <div class="setup-step">
+        <div class="step-num">1</div>
+        <div>Copy the code below and paste it into your Apps Script editor, replacing all existing content.</div>
+      </div>
+      <div class="code-block" id="appsScriptCode">function doPost(e) {
+  try {
+    const data = JSON.parse(e.postData.contents);
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = ss.getSheetByName('CallOuts');
+    if (!sheet) return respond({ error: 'Sheet not found' });
+
+    if (data.action === 'add') {
+      sheet.appendRow([data.id, data.date, data.name, data.reason]);
+      return respond({ success: true });
+    }
+    if (data.action === 'delete') {
+      const rows = sheet.getDataRange().getValues();
+      for (let i = rows.length - 1; i >= 1; i--) {
+        if (String(rows[i][0]) === String(data.id)) {
+          sheet.deleteRow(i + 1);
+          return respond({ success: true });
+        }
+      }
+      return respond({ error: 'Row not found' });
+    }
+    return respond({ error: 'Unknown action' });
+  } catch(err) {
+    return respond({ error: err.toString() });
+  }
+}
+
+function doGet(e) {
+  try {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = ss.getSheetByName('CallOuts');
+    if (!sheet) return respond({ error: 'Sheet not found' });
+    const rows = sheet.getDataRange().getValues();
+    const entries = rows.slice(1).map(r => ({
+      id: r[0], date: r[1], name: r[2], reason: r[3]
+    }));
+    return respond({ entries });
+  } catch(err) {
+    return respond({ error: err.toString() });
+  }
+}
+
+function respond(data) {
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}</div>
+      <button class="copy-script-btn" onclick="copyAppsScript(this)">Copy Script</button>
+    </div>
+
+    <!-- My Credentials -->
+    <div class="setup-body" id="sbody-creds" style="display:none;">
+      <div class="creds-lock-title">Enter Password to Access</div>
+      <div class="creds-pw-row">
+        <input type="password" class="creds-pw-input" id="credsPwInput" placeholder="Password" onkeydown="if(event.key==='Enter')unlockCreds()"/>
+        <button class="creds-pw-btn" onclick="unlockCreds()">Unlock</button>
+      </div>
+      <div class="creds-error" id="credsError">Incorrect password.</div>
+      <div class="creds-vault" id="credsVault">
+        <div class="creds-item">
+          <div class="creds-item-label">Apps Script URL</div>
+          <div class="creds-item-row">
+            <input type="text" class="creds-item-val" id="credsUrl" readonly/>
+            <button class="creds-copy-btn" onclick="copyCred('credsUrl',this)">Copy</button>
+          </div>
+        </div>
+        <div class="creds-item">
+          <div class="creds-item-label">Notes</div>
+          <div class="creds-item-row">
+            <input type="text" class="creds-item-val" id="credsNotes" placeholder="Any additional notes..."/>
+          </div>
+        </div>
+        <button class="creds-save-btn" onclick="saveCreds()">Save Notes</button>
+        <div class="creds-saved-msg" id="credsSavedMsg">Notes saved.</div>
+      </div>
     </div>
   </div>
 
@@ -787,6 +981,75 @@
       const data = localLoadData().filter(e => e.id !== id);
       localSaveData(data);
     }
+  }
+
+  // ── Setup Tabs ──
+  function switchSetupTab(tab) {
+    ['instr','script','creds'].forEach(t => {
+      document.getElementById('stab-'+t).classList.toggle('active', t===tab);
+      document.getElementById('sbody-'+t).style.display = t===tab ? 'block' : 'none';
+    });
+    // Lock vault when switching away
+    if(tab !== 'creds') {
+      document.getElementById('credsVault').style.display = 'none';
+      document.getElementById('credsPwInput').value = '';
+      document.getElementById('credsError').style.display = 'none';
+    }
+  }
+
+  function copyAppsScript(btn) {
+    const code = document.getElementById('appsScriptCode').textContent;
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(code).then(()=>{
+        btn.textContent='Copied!';
+        setTimeout(()=>{btn.textContent='Copy Script';},2000);
+      });
+    } else {
+      const ta=document.createElement('textarea');
+      ta.value=code;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.focus();ta.select();
+      try{document.execCommand('copy');btn.textContent='Copied!';setTimeout(()=>{btn.textContent='Copy Script';},2000);}catch(e){}
+      document.body.removeChild(ta);
+    }
+  }
+
+  function unlockCreds() {
+    const pw = document.getElementById('credsPwInput').value;
+    const err = document.getElementById('credsError');
+    if(pw === 'Powerback9927'){
+      err.style.display = 'none';
+      document.getElementById('credsVault').style.display = 'block';
+      document.getElementById('credsUrl').value = 'https://script.google.com/macros/s/AKfycby6smHfZX3hz5Gmp1v2Xd2BBZXL0NqPLkLZoRTDKp1m4hLomgqxA4PgJlXrJr-V_G7mTw/exec';
+      try{document.getElementById('credsNotes').value = localStorage.getItem('dot-creds-notes') || '';}catch(e){}
+    } else {
+      err.style.display = 'block';
+      document.getElementById('credsPwInput').value = '';
+    }
+  }
+
+  function saveCreds() {
+    try{
+      localStorage.setItem('dot-creds-notes', document.getElementById('credsNotes').value);
+      const msg = document.getElementById('credsSavedMsg');
+      msg.style.display = 'block';
+      setTimeout(()=>{msg.style.display='none';}, 2500);
+    }catch(e){}
+  }
+
+  function copyCred(id, btn) {
+    const val = document.getElementById(id).value;
+    if(!val) return;
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(val);
+    } else {
+      const ta=document.createElement('textarea');
+      ta.value=val;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.focus();ta.select();
+      try{document.execCommand('copy');}catch(e){}
+      document.body.removeChild(ta);
+    }
+    btn.textContent='Copied!';
+    setTimeout(()=>{btn.textContent='Copy';}, 2000);
   }
 
   // ── Setup Panel ──
