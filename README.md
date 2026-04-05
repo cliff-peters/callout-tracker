@@ -2,7 +2,7 @@
 
 Staff call-out log for Directors of Rehabilitation. Track employee absences by month with trends, summaries, and optional Google Sheets sync.
 
-Live: https://cliff-peters.github.io/callout-tracker
+Live: [https://cliff-peters.github.io/callout-tracker](https://cliff-peters.github.io/callout-tracker)
 
 ## Features
 
@@ -21,4 +21,4 @@ Connect to a Google Sheet to sync data across devices. Setup instructions and th
 
 ## Part of The DOR Suite
 
-https://cliff-peters.github.io
+[https://cliff-peters.github.io](https://cliff-peters.github.io)
