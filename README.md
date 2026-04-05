@@ -1,18 +1,24 @@
-## What It Does
+# Call Out Tracker
 
-Track and monitor employee call outs by month with per-employee breakdowns, trend charts, and optional Google Sheets sync.
+Staff call-out log for Directors of Rehabilitation. Track employee absences by month with trends, summaries, and optional Google Sheets sync.
+
+Live: https://cliff-peters.github.io/callout-tracker
 
 ## Features
 
 - Log call outs by employee name, date, and reason (Sick, No Show, Personal, Other)
 - Monthly stats with top caller tracking
-- Employee summary tab with per-person breakdowns
+- Employee summary with per-person breakdowns
 - 12-month trend chart
 - Auto-complete for previously entered names
-- Export current month to CSV
-- Optional Google Sheets backend for cross-device sync
-- Works offline with browser storage as the default
+- Export to CSV
+- Print view
+- Saves to browser storage by default — no login or setup required
 
 ## Google Sheets Sync (Optional)
 
-The tracker saves to your browser by default. To sync data across devices, connect it to a Google Sheet. Setup instructions and the Apps Script code are available on the [DOR Suite Dashboard](https://cliff-peters.github.io/dor-suite-dashboard/).
+Connect to a Google Sheet to sync data across devices. Setup instructions and the Apps Script code are available directly in the app.
+
+## Part of The DOR Suite
+
+https://cliff-peters.github.io
