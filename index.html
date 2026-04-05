@@ -24,6 +24,8 @@
     --purple-bg: rgba(155, 142, 196, 0.12);
     --green-bg: rgba(62, 207, 122, 0.12);
     --radius: 10px;
+    --logo-gradient: linear-gradient(135deg, #4a90d9, #3ecf7a);
+    --logo-text: #0c0f14;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -417,29 +419,34 @@
   .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
 
   /* ── Footer ── */
-  .suite-footer {
-    margin-top: 40px;
-    padding-top: 20px;
+  .footer {
+    margin-top: 48px;
+    padding: 24px 16px;
     border-top: 1px solid var(--bdr);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    font-size: 0.75rem;
-    color: var(--muted);
-    font-weight: 500;
   }
-  .suite-footer .cp-icon {
+  .footer-logo {
     width: 18px;
     height: 18px;
     border-radius: 4px;
-    background: linear-gradient(135deg, #4a90d9, #3ecf7a);
+    background: var(--logo-gradient);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    font-family: 'Mulish', sans-serif;
     font-weight: 800;
-    font-size: 0.55rem;
-    color: #0c0f14;
+    font-size: 7px;
+    color: var(--logo-text);
+    flex-shrink: 0;
+  }
+  .footer-text {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--muted);
   }
 
   /* ── Connection Status ── */
@@ -602,7 +609,7 @@
   /* ── Print ── */
   @media print {
     body { background: #fff; color: #222; padding: 12px; }
-    .btn, .form-grid, .header-actions, .month-nav .btn, .suite-footer { display: none !important; }
+    .btn, .form-grid, .header-actions, .month-nav .btn, .footer { display: none !important; }
     .tabs { display: none !important; }
     .panel, .stat-card { border-color: #ccc; background: #fff; }
     th { background: #f5f5f5; color: #555; }
@@ -854,9 +861,9 @@ function respond(data) {
     </div>
   </div>
 
-  <div class="suite-footer">
-    <span class="cp-icon">CP</span>
-    <span>Designed by Cliff Peters</span>
+  <div class="footer">
+    <span class="footer-logo">CP</span>
+    <span class="footer-text">Built by Cliff Peters</span>
   </div>
 
 </div>
