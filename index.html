@@ -13,7 +13,7 @@
     --border: #333a48;
     --text: #f0f2f5;
     --muted: #9ca3b4;
-    --blue: #5a9de6;
+    --blue: #ef4444;
     --green: #3ecf7a;
     --amber: #f0a830;
     --red: #ef4444;
@@ -81,7 +81,7 @@
     letter-spacing: 0.02em;
     flex-shrink: 0;
   }
-  .header-left h1 .title-blue { color: var(--blue); }
+  .header-left h1 .title-blue { color: #ef4444; }
   .header-actions {
     display: flex;
     gap: 8px;
@@ -159,6 +159,8 @@
   .tab.active {
     color: var(--blue);
     border-bottom-color: var(--blue);
+    background: rgba(239,68,68,0.1);
+    border-radius: 6px 6px 0 0;
   }
 
   /* ── Stats ── */
@@ -498,7 +500,7 @@
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
   }
-  .setup-tab.active { color: var(--green); border-bottom-color: var(--green); }
+  .setup-tab.active { color: var(--green); border-bottom-color: var(--green); background: rgba(62,207,122,0.08); border-radius: 6px 6px 0 0; }
   .setup-tab:hover:not(.active) { color: var(--text); }
   .setup-body { padding: 20px; }
   .setup-step {
@@ -575,12 +577,12 @@
   }
   .creds-item-val:focus { border-color: var(--amber); }
   .creds-copy-btn {
-    background: rgba(90,157,230,0.08); border: 1px solid rgba(90,157,230,0.2);
+    background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);
     color: var(--blue); font-family: 'Mulish', sans-serif;
     font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
     padding: 9px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s; white-space: nowrap;
   }
-  .creds-copy-btn:hover { background: rgba(90,157,230,0.15); border-color: var(--blue); }
+  .creds-copy-btn:hover { background: rgba(239,68,68,0.15); border-color: var(--blue); }
   .creds-save-btn {
     margin-top: 14px;
     background: rgba(62,207,122,0.08); border: 1px solid rgba(62,207,122,0.2);
@@ -616,12 +618,12 @@
 </style>
 </head>
 <body>
+<div style="position:fixed;top:0;left:0;right:0;height:3px;background:#ef4444;z-index:9999;"></div>
 
 <div class="container">
 
   <header>
     <div class="header-left">
-      <div class="eyebrow">The DOR Suite</div>
       <h1><span class="cp-logo">CP</span><span>Call Out <span class="title-blue">Tracker</span></span></h1>
     </div>
     <div class="header-actions">
