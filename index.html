@@ -625,12 +625,12 @@
       <h1><span class="cp-logo">CP</span><span>Call Out <span class="title-blue">Tracker</span></span></h1>
     </div>
     <div class="header-actions">
-      <button class="conn-status" onclick="toggleSetup()" title="Data storage settings">
+      <button type="button" class="conn-status" onclick="toggleSetup()" title="Data storage settings" aria-label="Data storage: local or Google Sheets">
         <span class="conn-dot" id="connDot"></span>
         <span id="connLabel">Local</span>
       </button>
-      <button class="btn" onclick="exportCSV()">&#x2913; Export CSV</button>
-      <button class="btn" onclick="window.print()">&#x2399; Print</button>
+      <button type="button" class="btn" onclick="exportCSV()" aria-label="Export call-outs as CSV">&#x2913; Export CSV</button>
+      <button type="button" class="btn" onclick="window.print()" aria-label="Print">&#x2399; Print</button>
     </div>
   </header>
 
@@ -702,7 +702,7 @@ function respond(data) {
       </div>
       <div class="setup-step">
         <div class="step-num">3</div>
-        <div>Go to <strong>Extensions → Apps Script</strong>. Delete any existing code. <button class="copy-script-btn" id="copyScriptBtn" onclick="copyAppsScript(this)">Copy Script</button> and paste it into the editor, then click Save.</div>
+        <div>Go to <strong>Extensions → Apps Script</strong>. Delete any existing code. <button type="button" class="copy-script-btn" id="copyScriptBtn" onclick="copyAppsScript(this)" aria-label="Copy Apps Script code to clipboard">Copy Script</button> and paste it into the editor, then click Save.</div>
       </div>
       <div class="setup-step">
         <div class="step-num">4</div>
@@ -721,21 +721,21 @@ function respond(data) {
           <label>Apps Script URL</label>
           <input type="text" id="inputScriptUrl" placeholder="https://script.google.com/macros/s/..." />
         </div>
-        <button class="btn btn-primary" onclick="saveScriptUrl()">Connect</button>
-        <button class="btn" onclick="disconnectSheet()">Disconnect</button>
+        <button type="button" class="btn btn-primary" onclick="saveScriptUrl()" aria-label="Connect Google Sheet">Connect</button>
+        <button type="button" class="btn" onclick="disconnectSheet()" aria-label="Disconnect Google Sheet">Disconnect</button>
       </div>
       <div class="setup-msg" id="setupMsg"></div>
 
       <!-- My Credentials — discrete footer -->
       <div style="border-top:1px solid #1e2430;margin-top:20px;padding-top:14px;">
-        <button id="credsToggleBtn" onclick="toggleCredsBlock()" style="background:none;border:none;cursor:pointer;font-family:'Mulish',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#4a5268;padding:0;display:flex;align-items:center;gap:5px;transition:color 0.2s;">
+        <button type="button" id="credsToggleBtn" onclick="toggleCredsBlock()" aria-label="Show or hide saved credentials" style="background:none;border:none;cursor:pointer;font-family:'Mulish',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#4a5268;padding:0;display:flex;align-items:center;gap:5px;transition:color 0.2s;">
           <span>My Credentials</span>
           <span id="credsChevron" style="font-size:8px;transition:transform 0.2s;">▾</span>
         </button>
         <div id="credsBlock" style="display:none;margin-top:12px;">
           <div class="creds-pw-row">
             <input type="password" class="creds-pw-input" id="credsPwInput" placeholder="Password" onkeydown="if(event.key==='Enter')unlockCreds()"/>
-            <button class="creds-pw-btn" onclick="unlockCreds()">Unlock</button>
+            <button type="button" class="creds-pw-btn" onclick="unlockCreds()" aria-label="Unlock saved credentials">Unlock</button>
           </div>
           <div class="creds-error" id="credsError">Incorrect password.</div>
           <div class="creds-vault" id="credsVault">
@@ -743,7 +743,7 @@ function respond(data) {
               <div class="creds-item-label">Apps Script URL</div>
               <div class="creds-item-row">
                 <input type="text" class="creds-item-val" id="credsUrl" readonly/>
-                <button class="creds-copy-btn" onclick="copyCred('credsUrl',this)">Copy</button>
+                <button type="button" class="creds-copy-btn" onclick="copyCred('credsUrl',this)" aria-label="Copy Apps Script URL to clipboard">Copy</button>
               </div>
             </div>
             <div class="creds-item">
@@ -752,7 +752,7 @@ function respond(data) {
                 <input type="text" class="creds-item-val" id="credsNotes" placeholder="Any additional notes..."/>
               </div>
             </div>
-            <button class="creds-save-btn" onclick="saveCreds()">Save Notes</button>
+            <button type="button" class="creds-save-btn" onclick="saveCreds()" aria-label="Save credential notes">Save Notes</button>
             <div class="creds-saved-msg" id="credsSavedMsg">Notes saved.</div>
           </div>
         </div>
@@ -761,15 +761,15 @@ function respond(data) {
   </div>
 
   <div class="month-nav">
-    <button class="btn" onclick="changeMonth(-1)">&larr;</button>
+    <button type="button" class="btn" onclick="changeMonth(-1)" aria-label="Previous month">&larr;</button>
     <div class="month-label" id="monthLabel"></div>
-    <button class="btn" onclick="changeMonth(1)">&rarr;</button>
+    <button type="button" class="btn" onclick="changeMonth(1)" aria-label="Next month">&rarr;</button>
   </div>
 
   <div class="tabs">
-    <button class="tab active" data-tab="log" onclick="switchTab('log')">Log</button>
-    <button class="tab" data-tab="summary" onclick="switchTab('summary')">By Employee</button>
-    <button class="tab" data-tab="trends" onclick="switchTab('trends')">Trends</button>
+    <button type="button" class="tab active" data-tab="log" onclick="switchTab('log')" aria-label="View call-out log">Log</button>
+    <button type="button" class="tab" data-tab="summary" onclick="switchTab('summary')" aria-label="View summary by employee">By Employee</button>
+    <button type="button" class="tab" data-tab="trends" onclick="switchTab('trends')" aria-label="View twelve month trends">Trends</button>
   </div>
 
   <div class="stats-row">
@@ -814,7 +814,7 @@ function respond(data) {
             <option value="Other">Other</option>
           </select>
         </div>
-        <button class="btn btn-primary" onclick="addEntry()">+ Add</button>
+        <button type="button" class="btn btn-primary" onclick="addEntry()" aria-label="Add call-out entry">+ Add</button>
       </div>
     </div>
 
@@ -1226,7 +1226,7 @@ function respond(data) {
           <td>${dateStr}</td>
           <td>${esc(e.name)}</td>
           <td><span class="badge ${badgeClass}">${e.reason}</span></td>
-          <td><button class="btn btn-sm btn-danger" onclick="deleteEntry(${e.id})">&times;</button></td>
+          <td><button type="button" class="btn btn-sm btn-danger" onclick="deleteEntry(${e.id})" aria-label="Delete call-out entry">&times;</button></td>
         </tr>`;
       }).join('');
     }
