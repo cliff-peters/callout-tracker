@@ -743,10 +743,8 @@ function respond(data) {
           <div class="creds-vault" id="credsVault">
             <div class="creds-item" style="margin-top:14px;">
               <div class="creds-item-label">Deployment URL</div>
-              <div class="creds-item-row">
-                <input type="text" class="creds-item-val" id="credsUrl" readonly/>
-                <button type="button" class="creds-copy-btn" onclick="copyCred('credsUrl',this)" aria-label="Copy Deployment URL to clipboard">Copy</button>
-              </div>
+              <input type="text" id="credsUrl" style="display:none;" readonly/>
+              <button type="button" class="creds-copy-btn" onclick="copyCred('credsUrl',this)" aria-label="Copy Deployment URL to clipboard" style="margin-top:6px;">Copy to Clipboard</button>
             </div>
           </div>
         </div>
