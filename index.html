@@ -742,20 +742,12 @@ function respond(data) {
           <div class="creds-error" id="credsError">Incorrect password.</div>
           <div class="creds-vault" id="credsVault">
             <div class="creds-item" style="margin-top:14px;">
-              <div class="creds-item-label">Apps Script URL</div>
+              <div class="creds-item-label">Deployment URL</div>
               <div class="creds-item-row">
                 <input type="text" class="creds-item-val" id="credsUrl" readonly/>
-                <button type="button" class="creds-copy-btn" onclick="copyCred('credsUrl',this)" aria-label="Copy Apps Script URL to clipboard">Copy</button>
+                <button type="button" class="creds-copy-btn" onclick="copyCred('credsUrl',this)" aria-label="Copy Deployment URL to clipboard">Copy</button>
               </div>
             </div>
-            <div class="creds-item">
-              <div class="creds-item-label">Notes</div>
-              <div class="creds-item-row">
-                <input type="text" class="creds-item-val" id="credsNotes" placeholder="Any additional notes..."/>
-              </div>
-            </div>
-            <button type="button" class="creds-save-btn" onclick="saveCreds()" aria-label="Save credential notes">Save Notes</button>
-            <div class="creds-saved-msg" id="credsSavedMsg">Notes saved.</div>
           </div>
         </div>
       </div>
@@ -1011,7 +1003,6 @@ function respond(data) {
       err.style.display = 'none';
       document.getElementById('credsVault').style.display = 'block';
       document.getElementById('credsUrl').value = 'https://script.google.com/macros/s/AKfycby6smHfZX3hz5Gmp1v2Xd2BBZXL0NqPLkLZoRTDKp1m4hLomgqxA4PgJlXrJr-V_G7mTw/exec';
-      try{document.getElementById('credsNotes').value = localStorage.getItem('dot-creds-notes') || '';}catch(e){}
     } else {
       err.style.display = 'block';
       document.getElementById('credsPwInput').value = '';
@@ -1020,7 +1011,6 @@ function respond(data) {
 
   function saveCreds() {
     try{
-      localStorage.setItem('dot-creds-notes', document.getElementById('credsNotes').value);
       const msg = document.getElementById('credsSavedMsg');
       msg.style.display = 'block';
       setTimeout(()=>{msg.style.display='none';}, 2500);
