@@ -784,7 +784,7 @@ function respond(data) {
       <div class="stat-value" id="statSick">0</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">No Show</div>
+      <div class="stat-label">Personal</div>
       <div class="stat-value" id="statNoShow">0</div>
     </div>
     <div class="stat-card">
@@ -811,7 +811,6 @@ function respond(data) {
           <label>Reason</label>
           <select id="inputReason">
             <option value="Sick">Sick</option>
-            <option value="No Show">No Show</option>
             <option value="Personal">Personal</option>
             <option value="Other">Other</option>
           </select>
@@ -1188,7 +1187,7 @@ function respond(data) {
     entries.sort((a, b) => new Date(normalizeDate(b.date) + 'T12:00:00') - new Date(normalizeDate(a.date) + 'T12:00:00'));
 
     const sick = entries.filter(e => e.reason === 'Sick').length;
-    const noShow = entries.filter(e => e.reason === 'No Show').length;
+    const noShow = entries.filter(e => e.reason === 'Personal').length;
     document.getElementById('statTotal').textContent = entries.length;
     document.getElementById('statSick').textContent = sick;
     document.getElementById('statNoShow').textContent = noShow;
@@ -1221,7 +1220,6 @@ function respond(data) {
         const d = new Date(normalizeDate(e.date) + 'T12:00:00');
         const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         const badgeClass = e.reason === 'Sick' ? 'badge-sick'
-          : e.reason === 'No Show' ? 'badge-noshow'
           : e.reason === 'Personal' ? 'badge-personal'
           : 'badge-other';
         return `<tr>
